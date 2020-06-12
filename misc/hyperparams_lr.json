@@ -1,0 +1,102 @@
+{
+  "ResNet56V2_cifar10": {
+    "initial_lr": 0.1,
+    "steps": [
+      50,
+      100,
+      150
+    ],
+    "epochs": 200,
+    "batch_size": 64,
+    "lr_sched_multipler": 0.3162,
+    "data_augmentation": "True",
+    "decay": 1e-5
+  },
+  "ResNet56V2_cifar100": {
+    "initial_lr": 0.1,
+    "steps": [
+      75,
+      150,
+      225
+    ],
+    "epochs": 300,
+    "batch_size": 64,
+    "lr_sched_multipler": 0.3162,
+    "data_augmentation": "True",
+    "decay": 1e-5
+  },
+  "VGG16_cifar10": {
+    "initial_lr": 0.01,
+    "steps": [
+      50,
+      100,
+      150
+    ],
+    "lr_sched_multipler": 0.1,
+    "epochs": 200,
+    "batch_size": 64,
+    "data_augmentation": "True",
+    "decay": 1e-5
+  },
+  "VGG16_cifar100": {
+    "initial_lr": 0.01,
+    "steps": [
+      150,
+      225
+    ],
+    "lr_sched_multipler": 0.1,
+    "epochs": 300,
+    "batch_size": 64,
+    "data_augmentation": "True",
+    "decay": 1e-5
+  },
+  "DenseNetBC_cifar10": {
+    "initial_lr": 0.1,
+    "steps": [
+      50,
+      100,
+      150
+    ],
+    "epochs": 200,
+    "batch_size": 64,
+    "lr_sched_multipler": 0.1,
+    "data_augmentation": "True",
+    "decay": 1e-5
+  },
+  "DenseNetBC_cifar100": {
+    "initial_lr": 0.1,
+    "steps": [
+      150,
+      225
+    ],
+    "lr_sched_multipler": 0.1,
+    "epochs": 300,
+    "batch_size": 64,
+    "data_augmentation": "True",
+    "decay": 1e-5
+  },
+  "simple_dense_mnist": {
+    "initial_lr": 0.05,
+    "steps": [
+      25,
+      40
+    ],
+    "lr_sched_multipler": 0.3162,
+    "epochs": 25,
+    "batch_size": 64,
+    "data_augmentation": "False",
+    "decay": 1e-5
+  },
+  "simple_dense_fashion_mnist": {
+    "initial_lr": 0.05,
+    "steps": [
+      30,
+      50
+    ],
+    "lr_sched_multipler": 0.3162,
+    "epochs": 50,
+    "batch_size": 64,
+    "data_augmentation": "False",
+    "decay": 1e-5
+  }
+}

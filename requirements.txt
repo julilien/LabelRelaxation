@@ -1,0 +1,16 @@
+tensorflow>=2.1.0
+numpy
+matplotlib
+keras
+mlflow
+scikit-learn
+Flask-SQLAlchemy
+mysql-connector-python
+mysqlclient
+h5py
+tqdm
+scikit-image
+protobuf>=3.8.0
+click
+torchfile
+scipy
