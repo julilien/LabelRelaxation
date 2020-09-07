@@ -4,6 +4,8 @@ from lr.models.models_meta import StringEnum
 class LossType(StringEnum):
     LR = "LabelRelaxation"
     CATEGORICAL_CROSSENTROPY = "CategoricalCrossentropy"
+    FOCAL = "FocalLoss"
+    CONFIDENCE_PENALTY = "ConfidencePenalty"
 
 
 def get_loss_type_by_name(loss_name, case_sensitive=False):
@@ -15,5 +17,9 @@ def get_loss_type_by_name(loss_name, case_sensitive=False):
             or loss_name == "cross_entropy" or loss_name == "categorical_crossentropy" or \
             loss_name == "crossentropy":
         return LossType.CATEGORICAL_CROSSENTROPY
+    elif loss_name == "focal" or loss_name == "focal_loss":
+        return LossType.FOCAL
+    elif loss_name == "confidencepenalty" or loss_name == "confidence_penalty":
+        return LossType.CONFIDENCE_PENALTY
     else:
         raise ValueError("Unknown loss type: {}".format(loss_name))

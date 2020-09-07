@@ -13,6 +13,8 @@ from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 from lr.data.io_utils import get_dataset_type_by_name, get_dataset_by_type
+from lr.losses.conf_penalty_loss import ConfidencePenaltyLoss
+from lr.losses.focal_loss import FocalLoss
 from lr.losses.losses_meta import LossType
 from lr.losses.lr_loss import LabelRelaxationLoss
 from lr.metrics.ece import evaluate_ece
@@ -20,6 +22,17 @@ from lr.models.models_meta import get_backbone_model_fn_by_type
 from lr.utils.tracking_utils import get_model_checkpoint_path, get_tensorboard_path
 from lr.utils.training_utils import LearningRateScheduleProvider, conduct_gen_model_training, \
     conduct_simple_model_training
+
+
+def get_hyperparameter_file_path(model_params):
+    if model_params.get_parameter("loss_type") == LossType.LR:
+        return 'misc/hyperparams_lr.json'
+    elif model_params.get_parameter("loss_type") == LossType.FOCAL:
+        return 'misc/hyperparams_focal.json'
+    elif model_params.get_parameter("loss_type") == LossType.CONFIDENCE_PENALTY:
+        return 'misc/hyperparams_conf_pen.json'
+    else:
+        return 'misc/hyperparams_ce.json'
 
 
 def preprocess_data(x, y, num_classes, pixel_mean=None, train=False):
@@ -79,6 +92,10 @@ def perform_run(model_params, cluster_job, model_checkpoints, config=None):
 
     if model_params.get_parameter("loss_type") == LossType.LR:
         loss_fn = LabelRelaxationLoss(alpha=model_params.get_parameter("alpha"), n_classes=num_classes)
+    elif model_params.get_parameter("loss_type") == LossType.FOCAL:
+        loss_fn = FocalLoss(alpha=model_params.get_parameter("alpha"))
+    elif model_params.get_parameter("loss_type") == LossType.CONFIDENCE_PENALTY:
+        loss_fn = ConfidencePenaltyLoss(alpha=model_params.get_parameter("alpha"))
     else:
         loss_fn = CategoricalCrossentropy(label_smoothing=model_params.get_parameter("alpha"),
                                           from_logits=model_params.get_parameter("temp_scaling", False))

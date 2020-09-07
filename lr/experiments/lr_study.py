@@ -4,7 +4,7 @@ import click
 import mlflow
 from tensorflow import random
 
-from lr.experiments.lr_exp import perform_run
+from lr.experiments.lr_exp import perform_run, get_hyperparameter_file_path
 from lr.losses.losses_meta import get_loss_type_by_name, LossType
 from lr.models.models_meta import ModelParameters, get_model_type_by_name
 from lr.utils.env import init_env, ROOT_DIR
@@ -14,7 +14,7 @@ from lr.utils.env import init_env, ROOT_DIR
 @click.option('--model_name', default='vgg', help='Backbone model',
               type=click.Choice(['resnet', 'vgg', 'simple_dense', 'densenet'], case_sensitive=False))
 @click.option('--loss_name', default='lr', help='Loss function to be evaluated',
-              type=click.Choice(['lr', 'cross_entropy'], case_sensitive=False))
+              type=click.Choice(['lr', 'cross_entropy', 'focal', 'confidence_penalty'], case_sensitive=False))
 @click.option('--alpha', default=0.0, help='Imprecisiation parameter', type=click.FLOAT)
 @click.option('--epochs', default=200)
 @click.option('--batch_size', default=64)
@@ -27,7 +27,7 @@ from lr.utils.env import init_env, ROOT_DIR
               type=click.Choice(['cifar100', 'imagenet', 'cifar10', 'mnist', 'fashion_mnist'], case_sensitive=False))
 @click.option('--decay', default=0.0, help='Weight decay')
 @click.option('--gradient_clipping', default=0.0, type=click.FLOAT)
-@click.option('--model_checkpoints', default=False,
+@click.option('--model_checkpoints', default=False, type=click.BOOL,
               help='Indicator whether the currently best performing model should be saved.')
 @click.option('--warmup', default=0)
 @click.option('--initial_lr', default=1e-3)
@@ -69,11 +69,7 @@ def perform_single_experiment(model_name, loss_name, alpha, epochs, batch_size, 
         model_params.set_parameter("load_ext_params", load_ext_params)
         model_params.set_parameter("temp_scaling", temp_scaling)
         if load_ext_params:
-            if model_params.get_parameter("loss_type") == LossType.LR:
-                hyper_params_path = 'misc/hyperparams_lr.json'
-            else:
-                hyper_params_path = 'misc/hyperparams_ce.json'
-
+            hyper_params_path = get_hyperparameter_file_path(model_params)
             model_params.load_parameters_from_file(os.path.join(ROOT_DIR, hyper_params_path),
                                                    '{}_{}'.format(model_params.get_parameter("model_type"), dataset_name))
 

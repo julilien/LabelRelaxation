@@ -1,13 +1,11 @@
+import tensorflow as tf
 from tensorflow.python.keras.layers.convolutional import Convolution2D
 from tensorflow.python.keras.layers.normalization import BatchNormalization
-from tensorflow_core.python.keras.applications import keras_modules_injection
-import tensorflow as tf
 from tensorflow.keras import Model
 from tensorflow.keras.layers import Input, ZeroPadding2D, Dense, Dropout, Activation, Convolution2D
 from tensorflow.keras.layers import AveragePooling2D, GlobalAveragePooling2D, BatchNormalization
 
 
-@keras_modules_injection
 def custDenseNet121_2(weights='imagenet', input_shape=None, classes=1000, final_activation='softmax', **kwargs):
     if weights is not None:
         raise NotImplementedError('Weight load is not implemented.')

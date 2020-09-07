@@ -1,7 +1,7 @@
 import tensorflow as tf
 
-from keras.losses import LossFunctionWrapper, kullback_leibler_divergence
-from keras import backend as K
+from tensorflow.keras import backend as K
+from tensorflow.python.keras.losses import LossFunctionWrapper, kullback_leibler_divergence
 
 
 class LabelRelaxationLoss(LossFunctionWrapper):

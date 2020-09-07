@@ -1,5 +1,4 @@
 from enum import Enum
-import tensorflow as tf
 import json
 import copy
 
