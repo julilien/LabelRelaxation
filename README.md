@@ -1,6 +1,6 @@
 # From Label Smoothing to Label Relaxation
 
-A (Tensorflow 2) implementation of the novel *label relaxation* approach as presented in the corresponding paper "From Label Smoothing to Label Relaxation"  submitted at NeurIPS 2020.
+A (Tensorflow 2) implementation of the novel *label relaxation* approach as presented in the corresponding paper "From Label Smoothing to Label Relaxation" submitted to AAAI 2021.
 
 ## Requirements
 
@@ -9,7 +9,7 @@ A detailed list of requirements can be found in `requirements.txt`. To install a
 pip install -r requirements.txt
 ```
 
-Note that the code has been tested with Python 3.7 on Ubuntu 18.04. Since we tried to avoid using any system-dependent call or library, we expect the code to be running also on other systems, such as Windows and MacOS.
+Note that the code has been tested with Python 3.7 on Ubuntu 18.04 and Python 3.8 on Ubuntu 20.04. Since we tried to avoid using any system-dependent call or library, we expect the code to be running also on other systems, such as Windows and MacOS.
 
 In some cases, we've experienced issues with the MySQL adapter package for Python 3.*, for which the pip package install was not sufficient to run the code. On Linux systems, this package may require to install additional system-dependent sources (e.g., for Ubuntu, we also had to run `sudo apt install build-essential python-dev libmysqlclient-dev`).
 
@@ -19,9 +19,9 @@ This repository provides a reimplementation of the models, losses, etc., that we
 
 The following components can be used:
 
-- `lr.data` provides a data loader for the used datasets mnist, fashion_mnist, cifar10 and cifar100
+- `lr.data` provides a data loader for the used datasets MNIST, Fashion-MNIST, CIFAR-10 and CIFAR-100
 - `lr.experiments` provides the implementation of experiment runs (incl. hyperparameter optimization)
-- `lr.losses` provides our label relaxation loss
+- `lr.losses` provides our label relaxation loss and (re-)implementations of the confidence penalty and focal loss
 - `lr.metrics` provides the implementation of the ECE calculation
 - `lr.models` provides all our model adaptions for our study
 - `lr.utils` provides means to initialize the environment, and further time, tracking and time utils
@@ -38,7 +38,7 @@ For hyperparameter runs, you need to run
 
 ```python3 lr/experiments/lr_study_ho.py [args]```
 
-For our implementation, we used Click to provide a convenient CLI for passing parameters. Therefore, you can print out all possible program arguments with the `--help` parameter.
+For our implementation, we used [Click](https://click.palletsprojects.com/en/7.x/) to provide a convenient CLI for passing parameters. Therefore, you can print out all possible program arguments with the `--help` parameter.
 
 As an example, to run our loss on fashion_mnist using the simple dense architecture for the seed 42, you have to run the following command:
 

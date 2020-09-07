@@ -1,0 +1,200 @@
+{
+  "ResNet56_cifar10": {
+    "initial_lr": 0.1,
+    "steps": [
+      50,
+      100,
+      150
+    ],
+    "epochs": 200,
+    "batch_size": 64,
+    "lr_sched_multipler": 0.3162,
+    "data_augmentation": "True",
+    "decay": 1e-5
+  },
+  "ResNet56_cifar100": {
+    "initial_lr": 0.1,
+    "steps": [
+      75,
+      150,
+      225
+    ],
+    "epochs": 300,
+    "batch_size": 64,
+    "lr_sched_multipler": 0.3162,
+    "data_augmentation": "True",
+    "decay": 1e-5
+  },
+  "ResNet50V2_cifar10": {
+    "initial_lr": 0.01,
+    "steps": [
+      50,
+      100,
+      150
+    ],
+    "epochs": 200,
+    "batch_size": 32,
+    "lr_sched_multipler": 0.1,
+    "data_augmentation": "True",
+    "decay": 1e-5
+  },
+  "ResNet50V2_cifar100": {
+    "initial_lr": 0.01,
+    "steps": [
+      60,
+      120,
+      160
+    ],
+    "lr_sched_multipler": 0.2,
+    "epochs": 200,
+    "batch_size": 32,
+    "data_augmentation": "False",
+    "decay": 1e-5
+  },
+  "VGG16_cifar10": {
+    "initial_lr": 0.001,
+    "steps": [
+      50,
+      100,
+      150
+    ],
+    "lr_sched_multipler": 0.1,
+    "epochs": 200,
+    "batch_size": 32,
+    "data_augmentation": "False"
+  },
+  "VGG16_cifar100": {
+    "initial_lr": 0.01,
+    "steps": [
+      75,
+      150,
+      225
+    ],
+    "lr_sched_multipler": 0.1,
+    "epochs": 300,
+    "batch_size": 32,
+    "data_augmentation": "False"
+  },
+  "VGG16BN_cifar10": {
+    "initial_lr": 0.1,
+    "steps": [
+      50,
+      100,
+      150
+    ],
+    "lr_sched_multipler": 0.1,
+    "epochs": 200,
+    "batch_size": 32,
+    "data_augmentation": "False"
+  },
+  "VGG16BN_cifar100": {
+    "initial_lr": 0.1,
+    "steps": [
+      75,
+      150,
+      225
+    ],
+    "lr_sched_multipler": 0.1,
+    "epochs": 300,
+    "batch_size": 32,
+    "data_augmentation": "False"
+  },
+  "VGG16BNDO_cifar10": {
+    "initial_lr": 0.01,
+    "steps": [
+      50,
+      100,
+      150
+    ],
+    "lr_sched_multipler": 0.1,
+    "epochs": 200,
+    "batch_size": 64,
+    "data_augmentation": "True",
+    "decay": 1e-5
+  },
+  "VGG16BNDO_cifar100": {
+    "initial_lr": 0.01,
+    "steps": [
+      150,
+      225
+    ],
+    "lr_sched_multipler": 0.1,
+    "epochs": 300,
+    "batch_size": 64,
+    "data_augmentation": "True",
+    "decay": 1e-5
+  },
+  "DenseNet121_cifar10": {
+    "initial_lr": 0.1,
+    "steps": [
+      50,
+      100,
+      150
+    ],
+    "epochs": 200,
+    "batch_size": 64,
+    "lr_sched_multipler": 0.1,
+    "data_augmentation": "True",
+    "decay": 1e-5
+  },
+  "DenseNet121_cifar100": {
+    "initial_lr": 0.1,
+    "steps": [
+      150,
+      225
+    ],
+    "lr_sched_multipler": 0.1,
+    "epochs": 300,
+    "batch_size": 64,
+    "data_augmentation": "True",
+    "decay": 1e-5
+  },
+  "simple_cnn_mnist": {
+    "initial_lr": 0.05,
+    "steps": [
+      20,
+      40
+    ],
+    "lr_sched_multipler": 0.3162,
+    "epochs": 15,
+    "batch_size": 64,
+    "data_augmentation": "False",
+    "decay": 1e-5
+  },
+  "simple_cnn_fashion_mnist": {
+    "initial_lr": 0.05,
+    "steps": [
+      25,
+      50
+    ],
+    "lr_sched_multipler": 0.3162,
+    "epochs": 75,
+    "batch_size": 64,
+    "data_augmentation": "False",
+    "decay": 1e-5
+  },
+  "simple_dense_mnist": {
+    "initial_lr": 0.05,
+    "steps": [
+      25,
+      40
+    ],
+    "lr_sched_multipler": 0.3162,
+    "epochs": 25,
+    "batch_size": 64,
+    "data_augmentation": "False",
+    "decay": 1e-5
+  },
+  "simple_dense_fashion_mnist": {
+    "initial_lr": 0.05,
+    "steps": [
+      30,
+      50
+    ],
+    "lr_sched_multipler": 0.3162,
+    "epochs": 50,
+    "batch_size": 64,
+    "data_augmentation": "False",
+    "decay": 1e-5
+  }
+}
