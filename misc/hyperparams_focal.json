@@ -1,5 +1,5 @@
 {
-  "ResNet56_cifar10": {
+  "ResNet56V2_cifar10": {
     "initial_lr": 0.1,
     "steps": [
       50,
@@ -12,7 +12,7 @@
     "data_augmentation": "True",
     "decay": 1e-5
   },
-  "ResNet56_cifar100": {
+  "ResNet56V2_cifar100": {
     "initial_lr": 0.1,
     "steps": [
       75,
