@@ -5,7 +5,7 @@ from tensorflow.python.keras.losses import LossFunctionWrapper
 class ConfidencePenaltyLoss(LossFunctionWrapper):
     def __init__(self, alpha=0.0):
         super(ConfidencePenaltyLoss, self).__init__(fn=self.loss, name="confidence_penalty")
-        # alpha represents beta
+        # alpha represents beta in the original paper
         self.alpha = alpha
 
     def loss(self, y_true, y_pred):

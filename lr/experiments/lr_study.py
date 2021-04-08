@@ -5,7 +5,7 @@ import mlflow
 from tensorflow import random
 
 from lr.experiments.lr_exp import perform_run, get_hyperparameter_file_path
-from lr.losses.losses_meta import get_loss_type_by_name, LossType
+from lr.losses.losses_meta import get_loss_type_by_name
 from lr.models.models_meta import ModelParameters, get_model_type_by_name
 from lr.utils.env import init_env, ROOT_DIR
 

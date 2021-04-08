@@ -22,11 +22,11 @@ class ModelType(StringEnum):
 
 
 def get_model_type_by_name(model_name):
-    if model_name == "resnet" or model_name == "ResNet56V2":
+    if model_name in ["resnet", "ResNet56V2"]:
         return ModelType.RESNET56_V2
-    elif model_name == "vgg" or model_name == "VGG16":
+    elif model_name in ["vgg", "VGG16"]:
         return ModelType.VGG16
-    elif model_name == "densenet" or model_name == "DenseNetBC":
+    elif model_name in ["densenet", "DenseNetBC"]:
         return ModelType.DENSENET_BC
     elif model_name == "simple_dense":
         return ModelType.SIMPLE_DENSE

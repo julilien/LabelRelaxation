@@ -148,12 +148,12 @@ def perform_run(model_params, cluster_job, model_checkpoints, config=None):
 
     # Training
     if not model_params.get_parameter("data_augmentation"):
-        logging.info('Train without data augmentation...')
+        logging.info('Training without data augmentation...')
         conduct_simple_model_training(model, x_train, y_train, validation_data=val_data,
                                       model_parameters=model_params, callbacks=callbacks, shuffle=True,
                                       verbose=verbosity)
     else:
-        logging.info('Using data augmentation.')
+        logging.info('Training without data augmentation.')
         datagen = ImageDataGenerator(featurewise_center=False, samplewise_center=False,
                                      featurewise_std_normalization=False, samplewise_std_normalization=False,
                                      zca_whitening=False, zca_epsilon=1e-06, rotation_range=0, width_shift_range=0.1,

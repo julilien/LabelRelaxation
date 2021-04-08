@@ -1,6 +1,22 @@
 # From Label Smoothing to Label Relaxation
 
-A (Tensorflow 2) implementation of the novel *label relaxation* approach as presented in the corresponding paper "From Label Smoothing to Label Relaxation" submitted to AAAI 2021.
+A repository providing the supplementary material and the (Tensorflow 2.*) implementation of the novel *label relaxation* approach as presented in the AAAI 2021 paper "From Label Smoothing to Label Relaxation" by Julian Lienen and Eyke Hüllermeier. Please do not hesitate to contact `julian.lienen(at)upb(dot)de` in case of any questions or remarks. We're always happy to receive valuable feedback.
+
+Please cite this work as follows:
+
+```
+@inproceedings{lienen2021label,
+  title={From Label Smoothing to Label Relaxation},
+  author={Julian Lienen and Eyke H{\"u}llermeier},
+  booktitle = {Proceedings of the 35th {AAAI} Conference on Artificial Intelligence, {AAAI}, Online, February 2-9, 2021},
+  year={2021},
+  publisher = {{AAAI} Press},
+}
+```
+
+## Supplementary Material
+
+Find the supplementary material providing additional proofs and further experimental details [here](Lienen_AAAI21_LabelRelaxation_Supplement.pdf).
 
 ## Requirements
 

@@ -11,15 +11,14 @@ class LossType(StringEnum):
 def get_loss_type_by_name(loss_name, case_sensitive=False):
     if not case_sensitive:
         loss_name = loss_name.lower()
-    if loss_name == "lr" or loss_name == "label_relaxation":
+    if loss_name in ["lr", "label_relaxation"]:
         return LossType.LR
-    elif loss_name == "categoricalcrossentropy" or loss_name == "categorical_cross_entropy" \
-            or loss_name == "cross_entropy" or loss_name == "categorical_crossentropy" or \
-            loss_name == "crossentropy":
+    elif loss_name in ["categoricalcrossentropy", "categorical_cross_entropy", "cross_entropy",
+                       "categorical_crossentropy", "crossentropy"]:
         return LossType.CATEGORICAL_CROSSENTROPY
-    elif loss_name == "focal" or loss_name == "focal_loss":
+    elif loss_name in ["focal", "focal_loss"]:
         return LossType.FOCAL
-    elif loss_name == "confidencepenalty" or loss_name == "confidence_penalty":
+    elif loss_name in ["confidencepenalty", "confidence_penalty"]:
         return LossType.CONFIDENCE_PENALTY
     else:
         raise ValueError("Unknown loss type: {}".format(loss_name))
