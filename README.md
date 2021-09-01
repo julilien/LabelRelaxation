@@ -64,6 +64,6 @@ Here, `load_ext_params` enables loading the hyperparameters from the correspondi
 
 ## Results
 
-The exhaustive result tables can be found in the evaluation section of the paper. Due to space limitations, we refer to this for an overview. As described in the paper, we evaluated the simple dense model on MNIST and Fashion MNIST with 10 different seeds (the corresponding parameter can be set; we used seeds 0 to 10), while we trained the bigger models on CIFAR-10 and CIFAR-100 for 5 times each (seeds 0 to 4). 
+The exhaustive result tables can be found in the evaluation section of the paper. Due to space limitations, we refer to this for an overview. As described in the paper, we evaluated the simple dense model on MNIST and Fashion MNIST with 10 different seeds (the corresponding parameter can be set; we used seeds 0 to 9), while we trained the bigger models on CIFAR-10 and CIFAR-100 for 5 times each (seeds 0 to 4). 
 
 As used within our code, [Mlflow](https://mlflow.org/) allows to efficiently aggregate the produced results. We used this framework to track our results.
