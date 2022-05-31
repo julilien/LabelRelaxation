@@ -1,16 +1,21 @@
 # From Label Smoothing to Label Relaxation
 
+:loudspeaker: A PyTorch implementation of our loss is now available in `lr_torch/lr_torch.py`.
+
 A repository providing the supplementary material and the (Tensorflow 2.*) implementation of the novel *label relaxation* approach as presented in the AAAI 2021 paper "From Label Smoothing to Label Relaxation" by Julian Lienen and Eyke Hüllermeier. Please do not hesitate to contact `julian.lienen(at)upb(dot)de` in case of any questions or remarks. We're always happy to receive valuable feedback.
 
 Please cite this work as follows:
 
 ```
 @inproceedings{lienen2021label,
-  title={From Label Smoothing to Label Relaxation},
-  author={Julian Lienen and Eyke H{\"u}llermeier},
-  booktitle = {Proceedings of the 35th {AAAI} Conference on Artificial Intelligence, {AAAI}, Online, February 2-9, 2021},
-  year={2021},
+  author    = {Julian Lienen and
+               Eyke H{\"{u}}llermeier},
+  title     = {From Label Smoothing to Label Relaxation},
+  booktitle = {Thirty-Fifth {AAAI} Conference on Artificial Intelligence, {AAAI} 2021, Thirty-Third Conference on Innovative Applications of Artificial Intelligence, {IAAI} 2021, The Eleventh Symposium on Educational Advances in Artificial Intelligence, {EAAI} 2021, Virtual Event, February 2-9, 2021},
+  pages     = {8583--8591},
   publisher = {{AAAI} Press},
+  year      = {2021},
+  url       = {https://ojs.aaai.org/index.php/AAAI/article/view/17041}
 }
 ```
 
