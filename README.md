@@ -1,74 +1,90 @@
-# From Label Smoothing to Label Relaxation
+# Label Relaxation
 
-:loudspeaker: A PyTorch implementation of our loss is now available in `lr_torch/lr_torch.py`.
+A modern, tested PyTorch implementation of the **label relaxation** loss from
 
-A repository providing the supplementary material and the (Tensorflow 2.*) implementation of the novel *label relaxation* approach as presented in the AAAI 2021 paper "From Label Smoothing to Label Relaxation" by Julian Lienen and Eyke Hüllermeier. Please do not hesitate to contact `julian.lienen(at)upb(dot)de` in case of any questions or remarks. We're always happy to receive valuable feedback.
+> Julian Lienen and Eyke Hüllermeier. **From Label Smoothing to Label Relaxation.** AAAI 2021.
+> [[paper]](https://ojs.aaai.org/index.php/AAAI/article/view/17041)
 
-Please cite this work as follows:
+Label relaxation replaces the precise (possibly smoothed) target distribution with a
+**credal set** of distributions — all distributions assigning at least `1 - alpha` to the
+observed class. The loss is zero whenever the prediction lies inside this set, and otherwise
+penalizes the KL divergence to the set's nearest member. Compared to label smoothing, this
+avoids penalizing confident-correct predictions and yields better-calibrated classifiers.
 
+This repository contains the maintained `label-relaxation` package (PyTorch) and, under
+[`legacy/`](legacy/), the original code of the AAAI 2021 paper (TensorFlow 2), kept frozen
+for reproducibility — see [`legacy/README.md`](legacy/README.md) for the paper experiments
+and the [supplementary material](Lienen_AAAI21_LabelRelaxation_Supplement.pdf).
+
+## Installation
+
+```bash
+pip install label-relaxation
 ```
+
+## Usage
+
+```python
+from label_relaxation import LabelRelaxationLoss
+
+criterion = LabelRelaxationLoss(alpha=0.1)  # drop-in for nn.CrossEntropyLoss
+loss = criterion(model(x), y)               # logits (..., C), integer targets (...)
+```
+
+A functional form is also available:
+
+```python
+from label_relaxation import label_relaxation_loss
+
+loss = label_relaxation_loss(logits, targets, alpha=0.1, reduction="mean")
+```
+
+Inputs are unnormalized logits with the class dimension **last**, so token-level inputs of
+shape `(batch, seq_len, vocab)` work without reshaping. Targets are class indices of shape
+`(...)` (the logits shape without the class dimension) or exactly one-hot float vectors of
+the same shape as the logits. Soft targets (e.g. from mixup) are intentionally rejected for
+now — mixing credal targets requires a set-combination rule that is future work.
+
+## What's different from the original implementation?
+
+The package is a from-scratch reimplementation, numerically equivalent to the original paper
+code (the test suite checks values and gradients against the frozen `legacy/` implementation),
+but:
+
+- **Closed form.** For one-hot targets the projected KL divergence collapses to
+  `(1-α)·log((1-α)/p_y) + α·log(α/(1-p_y))` — it depends only on the predicted probability
+  of the true class. The implementation computes this directly from `log_softmax` outputs,
+  with `log(1-p_y)` obtained via a masked `logsumexp`.
+- **Numerically stable.** No `softmax().log()` round trip; safe for extreme logits and for
+  fp16/bf16 inputs under autocast (the loss is computed in float32 internally).
+- **No magic constants.** The original identified the positive class via a hardcoded
+  `target > 0.1` threshold; targets are handled explicitly here.
+- **Exactly zero loss *and* gradient** for predictions inside the credal set, by
+  construction (covered by tests).
+
+Note on gradients: the credal projection is the KL minimizer over the set, so detaching it
+(as the original does) yields the same gradient as differentiating through it — the two
+implementations agree in both value and gradient (see `tests/test_loss.py`).
+
+## Development
+
+```bash
+uv sync        # installs CPU torch + dev dependencies
+uv run pytest  # 50 tests, including equivalence with the legacy implementation
+```
+
+## Citation
+
+```bibtex
 @inproceedings{lienen2021label,
-  author    = {Julian Lienen and
-               Eyke H{\"{u}}llermeier},
+  author    = {Julian Lienen and Eyke H{\"{u}}llermeier},
   title     = {From Label Smoothing to Label Relaxation},
-  booktitle = {Thirty-Fifth {AAAI} Conference on Artificial Intelligence, {AAAI} 2021, Thirty-Third Conference on Innovative Applications of Artificial Intelligence, {IAAI} 2021, The Eleventh Symposium on Educational Advances in Artificial Intelligence, {EAAI} 2021, Virtual Event, February 2-9, 2021},
+  booktitle = {Thirty-Fifth {AAAI} Conference on Artificial Intelligence},
   pages     = {8583--8591},
-  publisher = {{AAAI} Press},
-  year      = {2021},
-  url       = {https://ojs.aaai.org/index.php/AAAI/article/view/17041}
+  year      = {2021}
 }
 ```
 
-## Supplementary Material
+## License
 
-Find the supplementary material providing additional proofs and further experimental details [here](Lienen_AAAI21_LabelRelaxation_Supplement.pdf).
-
-## Requirements
-
-A detailed list of requirements can be found in `requirements.txt`. To install all required packages, one simply has to call
-```
-pip install -r requirements.txt
-```
-
-Note that the code has been tested with Python 3.7 on Ubuntu 18.04 and Python 3.8 on Ubuntu 20.04. Since we tried to avoid using any system-dependent call or library, we expect the code to be running also on other systems, such as Windows and MacOS.
-
-In some cases, we've experienced issues with the MySQL adapter package for Python 3.*, for which the pip package install was not sufficient to run the code. On Linux systems, this package may require to install additional system-dependent sources (e.g., for Ubuntu, we also had to run `sudo apt install build-essential python-dev libmysqlclient-dev`).
-
-## Repository structure
-
-This repository provides a reimplementation of the models, losses, etc., that were used for the empirical evaluation of our _label relaxation_ approach.
-
-The following components can be used:
-
-- `lr.data` provides a data loader for the used datasets MNIST, Fashion-MNIST, CIFAR-10 and CIFAR-100
-- `lr.experiments` provides the implementation of experiment runs (incl. hyperparameter optimization)
-- `lr.losses` provides our label relaxation loss and (re-)implementations of the confidence penalty and focal loss
-- `lr.metrics` provides the implementation of the ECE calculation
-- `lr.models` provides all our model adaptions for our study
-- `lr.utils` provides means to initialize the environment, and further time, tracking and time utils
-
-The hyperparameters used within our studies are provided in the corresponding JSON file in `misc/`.
-
-## Training and Evaluation
-
-Our implementation evaluates every model after finishing the training with regard to the classification rate and expected calibration error. To start a simple run without hyperparameter optimization, you just need to run 
-
-```python3 lr/experiments/lr_study.py [args]```
-
-For hyperparameter runs, you need to run
-
-```python3 lr/experiments/lr_study_ho.py [args]```
-
-For our implementation, we used [Click](https://click.palletsprojects.com/en/7.x/) to provide a convenient CLI for passing parameters. Therefore, you can print out all possible program arguments with the `--help` parameter.
-
-As an example, to run our loss on fashion_mnist using the simple dense architecture for the seed 42, you have to run the following command:
-
-```python3 lr/experiments/lr_study_ho.py --model_name simple_dense --loss_name lr --load_ext_params True --dataset_name fashion_mnist --seed 42```
-
-Here, `load_ext_params` enables loading the hyperparameters from the corresponding JSON file in `misc/`. Make sure to activate this in order to retrieve the correct hyperparameters as used within the experiments.
-
-## Results
-
-The exhaustive result tables can be found in the evaluation section of the paper. Due to space limitations, we refer to this for an overview. As described in the paper, we evaluated the simple dense model on MNIST and Fashion MNIST with 10 different seeds (the corresponding parameter can be set; we used seeds 0 to 9), while we trained the bigger models on CIFAR-10 and CIFAR-100 for 5 times each (seeds 0 to 4). 
-
-As used within our code, [Mlflow](https://mlflow.org/) allows to efficiently aggregate the produced results. We used this framework to track our results.
+Apache 2.0
