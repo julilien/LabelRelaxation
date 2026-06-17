@@ -36,11 +36,3 @@ build-backend = "uv_build"
 
 [tool.uv.build-backend]
 module-name = "label_relaxation"
-
-[[tool.uv.index]]
-name = "pytorch-cpu"
-url = "https://download.pytorch.org/whl/cpu"
-explicit = true
-
-[tool.uv.sources]
-torch = [{ index = "pytorch-cpu" }]
