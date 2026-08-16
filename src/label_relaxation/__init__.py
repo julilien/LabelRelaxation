@@ -5,7 +5,14 @@ AAAI 2021. https://ojs.aaai.org/index.php/AAAI/article/view/17041
 """
 
 from label_relaxation.loss import LabelRelaxationLoss, label_relaxation_loss
+from label_relaxation.mixup import MixupLabelRelaxationLoss, mixup_label_relaxation_loss
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
-__all__ = ["LabelRelaxationLoss", "label_relaxation_loss", "__version__"]
+__all__ = [
+    "LabelRelaxationLoss",
+    "label_relaxation_loss",
+    "MixupLabelRelaxationLoss",
+    "mixup_label_relaxation_loss",
+    "__version__",
+]

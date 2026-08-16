@@ -1,6 +1,6 @@
 [project]
 name = "label-relaxation"
-version = "0.1.0"
+version = "0.2.0"
 description = "Label relaxation loss for PyTorch — calibrated classification with credal targets (Lienen & Hüllermeier, AAAI 2021)"
 readme = "README.md"
 authors = [
@@ -23,7 +23,7 @@ Homepage = "https://github.com/julilien/LabelRelaxation"
 Paper = "https://ojs.aaai.org/index.php/AAAI/article/view/17041"
 
 [dependency-groups]
-dev = ["pytest>=8"]
+dev = ["pytest>=8", "cvxpy"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

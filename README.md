@@ -12,9 +12,11 @@ penalizes the KL divergence to the set's nearest member. Compared to label smoot
 avoids penalizing confident-correct predictions and yields better-calibrated classifiers.
 
 This repository contains the maintained `label-relaxation` package (PyTorch) and, under
-[`legacy/`](legacy/), the original code of the AAAI 2021 paper (TensorFlow 2), kept frozen
-for reproducibility — see [`legacy/README.md`](legacy/README.md) for the paper experiments
-and the [supplementary material](Lienen_AAAI21_LabelRelaxation_Supplement.pdf).
+[`legacy/`](https://github.com/julilien/LabelRelaxation/tree/master/legacy), the original code
+of the AAAI 2021 paper (TensorFlow 2), kept frozen for reproducibility — see
+[`legacy/README.md`](https://github.com/julilien/LabelRelaxation/blob/master/legacy/README.md)
+for the paper experiments and the
+[supplementary material](https://github.com/julilien/LabelRelaxation/blob/master/Lienen_AAAI21_LabelRelaxation_Supplement.pdf).
 
 ## Installation
 
@@ -42,8 +44,33 @@ loss = label_relaxation_loss(logits, targets, alpha=0.1, reduction="mean")
 Inputs are unnormalized logits with the class dimension **last**, so token-level inputs of
 shape `(batch, seq_len, vocab)` work without reshaping. Targets are class indices of shape
 `(...)` (the logits shape without the class dimension) or exactly one-hot float vectors of
-the same shape as the logits. Soft targets (e.g. from mixup) are intentionally rejected for
-now — mixing credal targets requires a set-combination rule that is future work.
+the same shape as the logits. Arbitrary soft targets are rejected: a mixed target needs a
+credal-set combination rule rather than a mixed point target — see `MixupLabelRelaxationLoss`
+below.
+
+### Mixup and CutMix
+
+For a mixed target `lam * e_i + (1 - lam) * e_j`, the credal set generalizes to
+
+```
+S = { p : p_i >= lam * (1 - alpha),  p_j >= (1 - lam) * (1 - alpha) }
+```
+
+and the loss is again the KL projection onto that set, `min_{q in S} KL(q || p_hat)`, which
+has a four-case closed form (KKT active-set analysis; derivation and numerical verification
+against a convex-solver oracle in
+[`docs/mixup_lr_derivation.md`](https://github.com/julilien/LabelRelaxation/blob/master/docs/mixup_lr_derivation.md)).
+
+```python
+from label_relaxation import MixupLabelRelaxationLoss
+
+criterion = MixupLabelRelaxationLoss(alpha=0.1)
+loss = criterion(model(x_mixed), y_a, y_b, lam)   # drop-in for mixed-target cross-entropy
+```
+
+The usual limits hold: `lam -> 0/1` recovers plain label relaxation, `alpha -> 0` recovers
+mixup cross-entropy (identical logit gradient), and `i == j` reduces to the single-label case.
+A functional form `mixup_label_relaxation_loss` is available as well.
 
 ## What's different from the original implementation?
 
@@ -70,7 +97,7 @@ implementations agree in both value and gradient (see `tests/test_loss.py`).
 
 ```bash
 uv sync        # installs CPU torch + dev dependencies
-uv run pytest  # 50 tests, including equivalence with the legacy implementation
+uv run pytest  # 71 tests: equivalence with the legacy implementation, cvxpy oracle for mixup
 ```
 
 ## Citation
