@@ -1,5 +1,9 @@
 # Label Relaxation
 
+[![PyPI](https://img.shields.io/pypi/v/label-relaxation)](https://pypi.org/project/label-relaxation/)
+[![Python versions](https://img.shields.io/pypi/pyversions/label-relaxation)](https://pypi.org/project/label-relaxation/)
+[![License](https://img.shields.io/pypi/l/label-relaxation)](https://github.com/julilien/LabelRelaxation/blob/master/LICENSE.txt)
+
 A modern, tested PyTorch implementation of the **label relaxation** loss from
 
 > Julian Lienen and Eyke Hüllermeier. **From Label Smoothing to Label Relaxation.** AAAI 2021.
@@ -19,6 +23,9 @@ for the paper experiments and the
 [supplementary material](https://github.com/julilien/LabelRelaxation/blob/master/Lienen_AAAI21_LabelRelaxation_Supplement.pdf).
 
 ## Installation
+
+Released on PyPI as [`label-relaxation`](https://pypi.org/project/label-relaxation/)
+(Python ≥ 3.10, PyTorch ≥ 2.13):
 
 ```bash
 pip install label-relaxation
