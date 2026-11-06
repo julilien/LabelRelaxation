@@ -8,7 +8,7 @@ authors = [
 ]
 license = "Apache-2.0"
 license-files = ["LICENSE.txt"]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = ["torch>=2.13.0"]
 keywords = ["label-relaxation", "label-smoothing", "calibration", "credal-sets", "pytorch", "loss-function"]
 classifiers = [
