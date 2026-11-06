@@ -25,7 +25,7 @@ for the paper experiments and the
 ## Installation
 
 Released on PyPI as [`label-relaxation`](https://pypi.org/project/label-relaxation/)
-(Python ≥ 3.10, PyTorch ≥ 2.13):
+(Python ≥ 3.11, PyTorch ≥ 2.13):
 
 ```bash
 pip install label-relaxation
